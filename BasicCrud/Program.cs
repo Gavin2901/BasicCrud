@@ -18,6 +18,7 @@ namespace SimpleCrudSystem
                 Console.WriteLine("2. List user by email");
                 Console.WriteLine("3. List all users");
                 Console.WriteLine("4. Update a User");
+                Console.WriteLine("5. Delete a user");
 
                 // Get user input
                 string input = Console.ReadLine();
@@ -39,6 +40,10 @@ namespace SimpleCrudSystem
                     case "4":
                         // Option to Update a user
                         UpdateUser();
+                        break;
+                    case "5":
+                        // Option to delete a user
+                        DeleteUser();
                         break;
                     default:
                         Console.WriteLine("Invalid input");
@@ -100,14 +105,14 @@ namespace SimpleCrudSystem
 
         static void UpdateUser()
         {
-            // List all the users
+            // List all the users for ease of use
             ListAllUsers();
 
-            // Get user's email address to update
+            // Asks for the email of the user you want to update
             Console.Write("Enter email address of user to update: ");
             string email = Console.ReadLine();
 
-            // Find user with matching email address
+            // This finds the user with the right email as you entered in the prompt
             User userToUpdate = users.Find(u => u.Email == email);
 
             // If user is found, prompt for new name and email address and update user
@@ -119,7 +124,7 @@ namespace SimpleCrudSystem
                 Console.Write("Enter new email address (press Enter to keep existing email address): ");
                 string newEmail = Console.ReadLine();
 
-                if (!string.IsNullOrWhiteSpace(name))
+                if (!string.IsNullOrWhiteSpace(name)) // checks if the user input is empty or contains white spae characters 
                 {
                     userToUpdate.Name = name;
                 }
@@ -130,6 +135,30 @@ namespace SimpleCrudSystem
                 }
 
                 Console.WriteLine("User updated successfully");
+            }
+            else
+            {
+                Console.WriteLine("User not found");
+            }
+        }
+
+        static void DeleteUser()
+        {
+            // List all the users for ease of use
+            ListAllUsers();
+
+            // Asks for the email of the user you want to delete
+            Console.Write("Enter email address of user to delete: ");
+            string email = Console.ReadLine();
+
+            // This finds the user with the right email as you entered in the prompt
+            User userToDelete = users.Find(u => u.Email == email);
+
+            // If user is found, remove user from list and display success message
+            if (userToDelete != null)
+            {
+                users.Remove(userToDelete);
+                Console.WriteLine("User deleted successfully");
             }
             else
             {
